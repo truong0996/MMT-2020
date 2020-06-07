@@ -1,0 +1,45 @@
+:root {
+  --main-bg-color: #808080;
+  --main-color: #efeeee;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: var(--main-bg-color);
+  color: var(--main-color);
+}
+
+#header {
+  text-align: center;
+}
+
+.members-container {
+  margin: auto;
+  width: 720px;
+  height: auto;
+  background-color: #404040;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.member {
+  display: flex;
+  padding: 25px;
+  margin: 5px;
+  background-color: #494949;
+  border-radius: 5px;
+}
+
+.member img {
+  width: 120px;
+  height: 120px;
+  display: inline-flex;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.member #info {
+  text-align: right;
+  width: 100%;
+  align-self: center;
+}
