@@ -14,15 +14,23 @@ while True:
     try:
         #Nhận dữ liệu client gửi (HTTP method)
         request = connectionSocket.recv(1024)
-        sendMainPage(request, connectionSocket)
+        print (request.decode('utf-8'))
+        if sendMainPage(request, connectionSocket) == True:
+            continue
+        if sendFavicon(request, connectionSocket) == True:
+            continue
         #Nhận credentials từ client gửi form
-        sendInfoPage(request, connectionSocket)
-        sendImage(request, connectionSocket)
+        if sendImage(request, connectionSocket) == True:
+            continue
+        if sendInfoPage(request, connectionSocket) == True:
+            continue
+        else: send404Page(connectionSocket)
+
         
         connectionSocket.close()
     except IOError:
         #Send response message for file not found
-        connectionSocket.send(b'404 Not Found')
+        send404Page(connectionSocket)
         #Close client socket
         connectionSocket.close()
 serverSocket.close() 

@@ -5,7 +5,7 @@ def sendImage(imgRequest, connectionSocket):
     imgRequest = imgRequest.decode('utf-8')
     if "GET /info/Cover-tom2.jpg HTTP/1.1" not in imgRequest:
         return False
-    print(imgRequest)
+    #print(imgRequest)
     #Gửi hình ảnh cho client
     img = open("./info/Cover-tom2.jpg", "rb").read()
     http_response_img = """HTTP/1.1 200 OK
@@ -21,7 +21,7 @@ def sendMainPage(request, connectionSocket):
     request = request.decode('utf-8')
     if ("GET / HTTP/1.1" not in request) and ("GET /index.html HTTP/1.1" not in request):
         return False
-    print(request)
+    #print(request)
     file = open("./index.html", "r")
     outputData = file.read()
     #Header http response của page chính
@@ -34,7 +34,7 @@ Content-Length: %d""" %len(outputData) + """
     return True
 
 def sendInfoPage(postRequest, connectionSocket):
-    print(postRequest.decode('utf-8'))
+    #print(postRequest.decode('utf-8'))
     #Xử lý query của form
     isTruthfulConnection = handlingClientQuery(postRequest.decode('utf-8'))
     #print(isTruthfulConnection)
@@ -51,4 +51,25 @@ Content-Length: %d""" %len(info) + """
         return True
     return False
 
-        
+def sendFavicon(requestFav, connectionSocket):
+    requestFav = requestFav.decode('utf-8')
+    if "GET /favicon.ico HTTP/1.1" not in requestFav:
+        return False
+    fav = open("./favicon.ico", "rb").read()
+    http_response_fav = """HTTP/1.1 200 OK
+""" + """Content-Type: image/x-icon
+Content-Length: %d""" %len(fav) + """
+
+"""
+    connectionSocket.send(bytes(http_response_fav, 'utf-8'))
+    connectionSocket.send(fav)
+    return True
+
+def send404Page(connectionSocket):
+    file = open("./404.html").read()
+    http_response_404 = """HTTP/1.1 200 OK
+""" + """Content-Type: text/html
+Content-Length: %d""" %len(file) + """
+
+""" + file
+    connectionSocket.send(bytes(http_response_404, 'utf-8'))
