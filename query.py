@@ -3,14 +3,14 @@ import json
 import re
 
 def handlingClientQuery(httpRequest):
-    request = httpRequest.split(" ", 2)[1]
-    #print('QUERYYYYYYY'+request)
-    #get username, password
-    credentials = re.split("^\/\?username=|&password=", request)
-    if len(credentials) != 3:
+    #check if HOST method
+    if "POST" not in httpRequest:
         return False
-    uname = credentials[1]
-    pwd = credentials[2]
+    #get username, password
+    credentials = re.split("username=|&password=", httpRequest)
+    uname = credentials[len(credentials) - 2]
+    pwd = credentials[len(credentials) - 1]
+    #print(uname + "\n" + pwd)
     
     #load data
     with open('credentials.json', 'r') as f:
