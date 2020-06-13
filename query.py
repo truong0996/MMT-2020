@@ -3,9 +3,6 @@ import json
 import re
 
 def handlingClientQuery(httpRequest):
-    #check if HOST method
-    if "POST" not in httpRequest:
-        return False
     #get username, password
     credentials = re.split("username=|&password=", httpRequest)
     uname = credentials[len(credentials) - 2]
