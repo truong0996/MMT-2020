@@ -18,20 +18,26 @@ while True:
         print (request.decode('utf-8'))
         #print (flag)
         if sendMainPage(request, connectionSocket) == True:
+            connectionSocket.close()
             continue
         if flag[0] == 1:
             if sendInfoPage(request, connectionSocket) == True:
                 flag = [0]
+                connectionSocket.close()
                 continue
         if flag[0] == -1:
             if send404Page(request, connectionSocket) == True:
                 flag = [0]
+                connectionSocket.close()
                 continue
         if sendFavicon(request, connectionSocket) == True:
+            connectionSocket.close()
             continue
         if sendImage(request, connectionSocket) == True:
+            connectionSocket.close()
             continue
         if sendRedirection(request, connectionSocket, flag)== True:
+            connectionSocket.close()
             continue
 
         connectionSocket.close()

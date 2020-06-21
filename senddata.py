@@ -16,7 +16,7 @@ Location: /index.html
     #browser yêu cầu page info
     #Xử lý query của form
     isReliableConnection = handlingClientQuery(request)
-    #print(isTruthfulConnection)
+    #print(isReliableConnection)
     if "POST /index.html" in request and isReliableConnection == False:
         #Gửi 404.html
         new_location = """
@@ -24,21 +24,20 @@ HTTP/1.1 301 Moved Permanently
 Location: /404.html
 
 """
-        print(new_location)
+        #print(new_location)
         connectionSocket.send(bytes(new_location, 'utf-8'))
         flag[0] = -1
         return True
-    else:
-        if "POST /index" in request and isReliableConnection == True:
-            new_location = """
+    if "POST /index.html" in request and isReliableConnection == True:
+        new_location = """
 HTTP/1.1 301 Moved Permanently
 Location: /info.html
 
 """
-            print(new_location)
-            connectionSocket.send(bytes(new_location, 'utf-8'))
-            flag[0] = 1
-            return True
+        #print(new_location)
+        connectionSocket.send(bytes(new_location, 'utf-8'))
+        flag[0] = 1
+        return True
     return False
 
 def sendImage(imgRequest, connectionSocket):
